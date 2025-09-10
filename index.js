@@ -10,7 +10,12 @@ const app = express();
 // Security middleware
 app.use(helmet());
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  origin: [
+    process.env.CLIENT_URL || 'http://localhost:5173',
+    'https://my-tube-two-xi.vercel.app',
+    'https://my-tube-98w4xr4uuszrpvoc63x3m566dnz6.vercel.app',
+    'https://my-tube.vercel.app'
+  ],
   credentials: true
 }));
 
@@ -32,6 +37,16 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/youtube-c
 })
 .then(() => console.log('MongoDB connected successfully'))
 .catch(err => console.error('MongoDB connection error:', err));
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.status(200).json({
+    status: 'OK',
+    message: 'YouTube Clone API is running',
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development'
+  });
+});
 
 // Routes
 app.use('/api/auth', require('./routes/auth'));
