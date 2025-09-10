@@ -12,7 +12,7 @@ app.use(helmet());
 app.use(cors({
   origin: [
     process.env.CLIENT_URL || 'http://localhost:5173',
-    'https://my-tube-two-xi.vercel.app',
+    'https://my-tube-git-main-abhinavs-projects-6ac6bc1e.vercel.app',
     'https://my-tube-98w4xr4uuszrpvoc63x3m566dnz6.vercel.app',
     'https://my-tube.vercel.app'
   ],
@@ -45,6 +45,17 @@ app.get('/api/health', (req, res) => {
     message: 'YouTube Clone API is running',
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV || 'development'
+  });
+});
+
+// Simple videos endpoint for testing
+app.get('/api/videos', (req, res) => {
+  res.status(200).json({
+    videos: [],
+    total: 0,
+    page: 1,
+    limit: 12,
+    message: 'Videos endpoint working'
   });
 });
 
