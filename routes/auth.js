@@ -73,8 +73,14 @@ router.post('/register', [
       }
     });
   } catch (error) {
-    console.error('Registration error:', error);
-    res.status(500).json({ message: 'Server error during registration' });
+    console.error('Registration error details:', error);
+
+    // send back error details for debugging
+    res.status(500).json({
+      message: 'Server error during registration',
+      error: error.message,
+      stack: error.stack
+    });
   }
 });
 
@@ -125,8 +131,13 @@ router.post('/login', [
       }
     });
   } catch (error) {
-    console.error('Login error:', error);
-    res.status(500).json({ message: 'Server error during login' });
+    console.error('Login error details:', error);
+
+    res.status(500).json({
+      message: 'Server error during login',
+      error: error.message,
+      stack: error.stack
+    });
   }
 });
 
@@ -152,8 +163,13 @@ router.get('/me', auth, async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('Get user error:', error);
-    res.status(500).json({ message: 'Server error' });
+    console.error('Get user error details:', error);
+
+    res.status(500).json({
+      message: 'Server error',
+      error: error.message,
+      stack: error.stack
+    });
   }
 });
 
